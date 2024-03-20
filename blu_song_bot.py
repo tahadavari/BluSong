@@ -1,4 +1,5 @@
 import logging
+import time
 
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
@@ -51,15 +52,17 @@ Artist Name: {music.artist}
             )
 
 
-            photo_message = await context.bot.send_photo(chat_id=CHAT_ID, caption=caption,
-                                                         photo=open(music_thumbnail_path, "rb"), read_timeout=TIMEOUT,
-                                                         write_timeout=TIMEOUT)
-            await context.bot.send_audio(chat_id=CHAT_ID, reply_to_message_id=photo_message.message_id,
+            # photo_message = await context.bot.send_photo(chat_id=CHAT_ID, caption=caption,
+            #                                              photo=open(music_thumbnail_path, "rb"), read_timeout=TIMEOUT,
+            #                                              write_timeout=TIMEOUT)
+            song_message = await context.bot.send_audio(chat_id=CHAT_ID,
+                                         # reply_to_message_id=photo_message.message_id,
                                          audio=open(music_path, "rb"), filename=f"{music.name} - {music.artist}",
                                          read_timeout=TIMEOUT,
+                                         thumbnail=open(music_thumbnail_path, "rb"),
                                          write_timeout=TIMEOUT, caption="Enjoy listening with @BluSong")
-
-            await add_song_to_file([music.id, music.name, photo_message.message_id])
+            time.sleep(5)
+            await add_song_to_file([music.id, music.name, song_message.message_id])
             await delete_file(music_path)
             await delete_file(music_thumbnail_path)
             end_message = await context.bot.send_message(
@@ -70,6 +73,7 @@ Artist Name: {music.artist}
 
         except Exception as e:
             logging.critical(f'Cant download music by id: {music_id}', music_id)
+            await context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=start_message.message_id)
             end_message = await context.bot.send_message(
                 chat_id=update.effective_chat.id,
                 text=f"music: {music_id} has not download"

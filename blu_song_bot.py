@@ -44,23 +44,24 @@ async def rjs_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 Artist Name: {music.artist}
 
-@BluSong
+Enjoy listening with @BluSong
                 """
             start_message = await context.bot.send_message(
                 chat_id=update.effective_chat.id,
                 text=f"music: {music.id} has started"
             )
 
-
             # photo_message = await context.bot.send_photo(chat_id=CHAT_ID, caption=caption,
             #                                              photo=open(music_thumbnail_path, "rb"), read_timeout=TIMEOUT,
             #                                              write_timeout=TIMEOUT)
             song_message = await context.bot.send_audio(chat_id=CHAT_ID,
-                                         # reply_to_message_id=photo_message.message_id,
-                                         audio=open(music_path, "rb"), filename=f"{music.name} - {music.artist}",
-                                         read_timeout=TIMEOUT,
-                                         thumbnail=open(music_thumbnail_path, "rb"),
-                                         write_timeout=TIMEOUT, caption="Enjoy listening with @BluSong")
+                                                        # reply_to_message_id=photo_message.message_id,
+                                                        audio=open(music_path, "rb"),
+                                                        filename=f"{music.name} - {music.artist}",
+                                                        read_timeout=TIMEOUT,
+                                                        caption=caption,
+                                                        thumbnail=open(music_thumbnail_path, "rb"),
+                                                        write_timeout=TIMEOUT)
             time.sleep(5)
             await add_song_to_file([music.id, music.name, song_message.message_id])
             await delete_file(music_path)

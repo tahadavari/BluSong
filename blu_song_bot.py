@@ -33,6 +33,8 @@ async def rjs_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     end_message = None
     for music_id in range(120000, 120010):
         try:
+            if end_message:
+                await context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=end_message.message_id)
             music = get_music_by_id(music_id)
             music_path = download_music(music)
             music_thumbnail_path = download_music_thumbnail(music)
@@ -47,8 +49,7 @@ Artist Name: {music.artist}
                 chat_id=update.effective_chat.id,
                 text=f"music: {music.id} has started"
             )
-            if end_message:
-                await context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=end_message.message_id)
+
 
             photo_message = await context.bot.send_photo(chat_id=CHAT_ID, caption=caption,
                                                          photo=open(music_thumbnail_path, "rb"), read_timeout=TIMEOUT,
@@ -69,6 +70,10 @@ Artist Name: {music.artist}
 
         except Exception as e:
             logging.critical(f'Cant download music by id: {music_id}', music_id)
+            end_message = await context.bot.send_message(
+                chat_id=update.effective_chat.id,
+                text=f"music: {music_id} has not download"
+            )
             continue
 
 

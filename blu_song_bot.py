@@ -15,10 +15,10 @@ TIMEOUT = 1000000
 
 # Enable logging
 logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.CRITICAL
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
 )
 # set higher logging level for httpx to avoid all GET and POST requests being logged
-logging.getLogger("httpx").setLevel(logging.CRITICAL)
+logging.getLogger("httpx").setLevel(logging.INFO)
 
 logger = logging.getLogger(__name__)
 
@@ -28,6 +28,13 @@ async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         chat_id=update.effective_chat.id,
         text=f"Hi {update.effective_user.first_name}!"
     )
+
+
+async def testc_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    message = await context.bot.send_message(chat_id=CHAT_ID,
+
+                                   text="testc")
+    print(message.message_id)
 
 
 async def rjs_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -89,6 +96,7 @@ if __name__ == "__main__":
     application.add_handler(CommandHandler("start", start_handler))
 
     application.add_handler(CommandHandler("rjs", rjs_handler))
+    application.add_handler(CommandHandler("testc", testc_handler))
 
     # Run the Bot
     application.run_polling()

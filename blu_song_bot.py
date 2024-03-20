@@ -75,7 +75,6 @@ Enjoy listening with @BluSong
 
         except Exception as e:
             logging.critical(f'Cant download music by id: {music_id}', music_id)
-            await context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=start_message.message_id)
             end_message = await context.bot.send_message(
                 chat_id=update.effective_chat.id,
                 text=f"music: {music_id} has not download"

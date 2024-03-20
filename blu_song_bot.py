@@ -1,3 +1,4 @@
+import asyncio
 import logging
 import time
 
@@ -62,7 +63,7 @@ Enjoy listening with @BluSong
                                                         caption=caption,
                                                         thumbnail=open(music_thumbnail_path, "rb"),
                                                         write_timeout=TIMEOUT)
-            time.sleep(5)
+            await asyncio.sleep(5)
             await add_song_to_file([music.id, music.name, song_message.message_id])
             await delete_file(music_path)
             await delete_file(music_thumbnail_path)

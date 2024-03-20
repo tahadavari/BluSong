@@ -4,13 +4,13 @@ import uuid
 
 import requests
 
-# SONG_PATH_SAVE_MEMORY = "/tmp/radiojavan/songs/"
-# SONG_THUMBNAIL_PATH_SAVE_MEMORY = "/tmp/radiojavan/thumbnails/"
-# SONG_FILE = "/tmp/radiojavan/songs.csv"
+SONG_PATH_SAVE_MEMORY = "/tmp/radiojavan/songs/"
+SONG_THUMBNAIL_PATH_SAVE_MEMORY = "/tmp/radiojavan/thumbnails/"
+SONG_FILE = "/tmp/radiojavan/songs.csv"
 
-SONG_PATH_SAVE_MEMORY = "./songs/"
-SONG_THUMBNAIL_PATH_SAVE_MEMORY = "./thumbnails/"
-SONG_FILE = "./songs.csv"
+# SONG_PATH_SAVE_MEMORY = "./songs/"
+# SONG_THUMBNAIL_PATH_SAVE_MEMORY = "./thumbnails/"
+# SONG_FILE = "./songs.csv"
 
 
 def download_music(music):

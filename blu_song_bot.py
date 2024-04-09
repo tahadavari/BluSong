@@ -40,7 +40,7 @@ async def testc_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def rjs_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await create_path()
     end_message = None
-    for music_id in range(120000, 120010):
+    for music_id in range(118129, 130000):
         try:
             if end_message:
                 await context.bot.deleteMessage(chat_id=update.effective_chat.id, message_id=end_message.message_id)
@@ -59,18 +59,18 @@ Enjoy listening with @BluSong
                 text=f"music: {music.id} has started"
             )
 
-            # photo_message = await context.bot.send_photo(chat_id=CHAT_ID, caption=caption,
-            #                                              photo=open(music_thumbnail_path, "rb"), read_timeout=TIMEOUT,
-            #                                              write_timeout=TIMEOUT)
+            photo_message = await context.bot.send_photo(chat_id=CHAT_ID, caption=caption,
+                                                         photo=open(music_thumbnail_path, "rb"), read_timeout=TIMEOUT,
+                                                         write_timeout=TIMEOUT)
             song_message = await context.bot.send_audio(chat_id=CHAT_ID,
-                                                        # reply_to_message_id=photo_message.message_id,
+                                                        reply_to_message_id=photo_message.message_id,
                                                         audio=open(music_path, "rb"),
                                                         filename=f"{music.name} - {music.artist}",
                                                         read_timeout=TIMEOUT,
                                                         caption=caption,
                                                         thumbnail=open(music_thumbnail_path, "rb"),
                                                         write_timeout=TIMEOUT)
-            await asyncio.sleep(5)
+            await asyncio.sleep(8)
             await add_song_to_file([music.id, music.name, song_message.message_id])
             await delete_file(music_path)
             await delete_file(music_thumbnail_path)
